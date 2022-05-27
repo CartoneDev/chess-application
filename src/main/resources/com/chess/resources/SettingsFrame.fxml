@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="settingsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chess.application.SettingsController">
+	<top>
+		<MenuBar BorderPane.alignment="CENTER">
+			<Menu mnemonicParsing="false" text="Game">
+				<MenuItem fx:id="exitItem" mnemonicParsing="false" onAction="#handleExit" text="Quit"/>
+			</Menu>
+		</MenuBar>
+	</top>
+	<center>
+		<VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="500.0" prefWidth="500.0" spacing="20">
+			<Label fx:id="welcomeLabel" text="WELCOME"/>
+			<Label fx:id="colorLabel" text="please choose color:"/>
+			<RadioButton fx:id="whiteChoice" mnemonicParsing="false" onAction="#handleWhiteRadio" prefHeight="10.0"
+						 prefWidth="80.0" selected="true" text="white"/>
+			<RadioButton fx:id="blackChoice" mnemonicParsing="false" onAction="#handleBlackRadio" prefHeight="10.0"
+						 prefWidth="80.0" text="black"/>
+			<Label fx:id="modeLabel" text="please choose mode:"/>
+			<ComboBox fx:id="modeChoice" onAction="#handleModeChoice" prefHeight="25.0" prefWidth="250.0"/>
+			<Label fx:id="difficultyLabel" text="set difficulty:"/>
+			<Slider fx:id="difficultyChoice" snapToTicks="true" majorTickUnit="10.0" maxWidth="250.0" prefHeight="14.0"
+					prefWidth="250.0"/>
+			<VBox alignment="CENTER" prefHeight="10.0" prefWidth="500.0" spacing="5" BorderPane.alignment="CENTER">
+				<HBox alignment="CENTER" prefHeight="10.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+					<Button fx:id="loadButton" mnemonicParsing="false" onAction="#handleLoadButton"
+							prefWidth="120.0" text="LOAD ... ?"/>
+					<Region prefWidth="10.0"/>
+					<Label fx:id="loadLabel" prefWidth="120.0" text="nothing loaded"/>
+				</HBox>
+				<Region prefWidth="10.0"/>
+				<Button fx:id="startButton" mnemonicParsing="false" onAction="#handleStartButton" prefWidth="250.0"
+						text="START GAME"/>
+			</VBox>
+		</VBox>
+	</center>
+</BorderPane>
