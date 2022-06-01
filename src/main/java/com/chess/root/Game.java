@@ -9,6 +9,9 @@ import com.chess.model.Mode;
 import com.chess.model.Setting;
 import com.chess.root.moves.Move;
 
+/**
+ * Main game class representing a chess game
+ */
 public class Game {
 
 	private final GameController controller;
@@ -29,6 +32,11 @@ public class Game {
 	private String pgnBlack;
 	private String pgnResult = "*";
 
+	/**
+	 * Constructor for a game object
+	 * @param controller which passes GUI calls - player controls from gui
+	 * @param settings stores game settings
+	 */
 	public Game(GameController controller, Setting settings) {
 		this.controller = controller;
 		setUpPlayers(settings.getColor(), settings.getMode());
@@ -73,25 +81,42 @@ public class Game {
 
 	// ---------------------------------- PLAYER HANDLING ----------------------------------
 
-
+	/**
+	 * Getter for a event name from pgn data
+	 * @return event name
+	 */
 	public String getEvent() {
 		if (pgnEvent == null) {
 			return "";
 		}
 		return pgnEvent;
 	}
+	/**
+	 * Getter for a site from pgn data
+	 * @return site where event was hosted
+	 */
 	public String getSite() {
 		if (pgnSite == null) {
 			return "";
 		}
 		return pgnSite;
 	}
+
+	/**
+	 * Getter for a date from pgn data
+	 * @return date when an event was hosted
+	 */
 	public String getDate() {
 		if (pgnDate == null) {
 			return "";
 		}
 		return pgnDate;
 	}
+
+	/**
+	 * Getter for a round from pgn data
+	 * @return date when an event was hosted
+	 */
 	public String getRound() {
 		if (pgnRound == null) {
 			return "";
@@ -99,22 +124,38 @@ public class Game {
 		return pgnRound;
 	}
 
+	/**
+	 * Getter for a difficulty from pgn data
+	 * @return difficulty
+	 */
 	public String getDifficulty() {
 		return pgnDifficulty;
 	}
-
+	/**
+	 * Getter for a white player
+	 * @return white player name from pgn data, empty string otherwise
+	 */
 	public String getWhite() {
 		if (pgnWhite == null) {
 			return "";
 		}
 		return pgnWhite;
 	}
+	/**
+	 * Getter for a black player
+	 * @return black player name from pgn data, empty string otherwise
+	 */
 	public String getBlack() {
 		if (pgnBlack == null) {
 			return "";
 		}
 		return pgnBlack;
 	}
+
+	/**
+	 * Getter for a game result
+	 * @return game result from pgn turn history
+	 */
 	public String getResult() {
 		if (board.hasHistory()) {
 			pgnResult = board.getHistory().get(getHistory().size()-1).getResult();
@@ -123,14 +164,27 @@ public class Game {
 		}
 		return pgnResult;
 	}
+
+	/**
+	 * Getter for a list of moves
+	 * @return list of moves done in this game
+	 */
 	public List<Move> getHistory() {
 		return board.getHistory();
 	}
 
+	/**
+	 * getter for current player
+	 * @return current player
+	 */
 	public Player getPlayer() {
 		return currentPlayer;
 	}
 
+	/**
+	 * getter for an opponent of a current player
+	 * @return an opponent of a current player
+	 */
 	public Player getOtherPlayer() {
 		if (currentPlayer != null && currentPlayer.equals(blackPlayer)) {
 			return whitePlayer;
@@ -138,6 +192,10 @@ public class Game {
 		return blackPlayer;
 	}
 
+	/**
+	 * Getter for players played by AI
+	 * @return list of player played by AI
+	 */
 	public List<Player> getAIPlayers() {
 		List<Player> players = new ArrayList<>();
 		if (blackPlayer.isAI()) {
@@ -149,12 +207,18 @@ public class Game {
 		return players;
 	}
 
+	/**
+	 * method to pass a turn to another player
+	 */
 	public void switchPlayer() {
 		switchPlayerSilently();
 		board.validateBoard();
 		notifyAI();
 	}
 
+	/**
+	 * utility method to technically pass a turn without any clue for a player
+	 */
 	public void switchPlayerSilently() {
 		currentPlayer = getOtherPlayer();
 
@@ -163,12 +227,19 @@ public class Game {
 		}
 	}
 
+	/**
+	 * sets display of possible moves to on / off
+	 * @param on / off the display of possible moves
+	 */
 	public void setDummyMode(boolean on) {
 		board.setDummyMode(on);
 	}
 
 	// ---------------------------------- EDIT MODE HANDLING ----------------------------------
 
+	/**
+	 * Reverts last move
+	 */
 	public void stepBack() {
 		if (board.hasHistory()) {
 			controller.setForwardBut(true);
@@ -189,6 +260,9 @@ public class Game {
 		}
 	}
 
+	/**
+	 * transforms board state to next move
+	 */
 	public void stepForward() {
 		if (board.hasFutureMoves()) {
 			controller.setBackBut(true);
@@ -205,6 +279,9 @@ public class Game {
 		}
 	}
 
+	/**
+	 * blocks threads
+	 */
 	private void holdThreads() {
 		if (blackPlayer.isAI() && blackPlayer.getThread() != null) {
 			blackPlayer.getThread().block(true);
@@ -215,6 +292,9 @@ public class Game {
 		pauseCurrent();
 	}
 
+	/**
+	 * pauses the game
+	 */
 	public void pauseGame() {
 		if (gameEnded) {
 			controller.setGoBut(false);
@@ -228,6 +308,9 @@ public class Game {
 		holdThreads();
 	}
 
+	/**
+	 * resumes the game
+	 */
 	public void resumeGame() {
 		gameEnded = false;
 		controller.requestFocusStop();
@@ -250,6 +333,10 @@ public class Game {
 		notifyAI();
 	}
 
+	/**
+	 * sets speed delay in ms
+	 * @param speed - delay in ms
+	 */
 	public void setSpeed(int speed) {
 		board.setDelay(speed);
 	}
@@ -288,6 +375,11 @@ public class Game {
 		}
 	}
 
+	/**
+	 * ends the game
+	 * @param endType end game type
+	 * @param hasWinner does game have a winner
+	 */
 	public void endGame(String endType, boolean hasWinner) {
 		gameEnded = true;
 		controller.setForwardBut(false);
@@ -308,6 +400,9 @@ public class Game {
 
 	// ---------------------------------- HELPER METHODS ----------------------------------
 
+	/**
+	 * Updates move counter on turn
+	 */
 	public void updateMoveCounter() {
  		moveCounter += 0.5;
  		controller.updateMoveCounter(Double.toString(moveCounter));
@@ -341,10 +436,11 @@ public class Game {
 
 	// ---------------------------------- GENERIC GETTERS ----------------------------------
 
+	// getter for game controller
 	public GameController getController() {
 		return controller;
 	}
-
+    // getter for board
  	public Board getBoard() {
  		return board;
  	}

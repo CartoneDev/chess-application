@@ -1,5 +1,8 @@
 package com.chess.model;
 
+/**
+ * Collection of possible move directions
+ */
 public enum Direction {
 
 	BOTTOM_LEFT(-1, 1, false), 

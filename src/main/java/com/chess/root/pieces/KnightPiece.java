@@ -6,6 +6,9 @@ import com.chess.root.Board;
 import com.chess.root.Field;
 import com.chess.root.moves.Move;
 
+/**
+ * knight class
+ */
 public class KnightPiece extends Piece {
 	
 	private static String name = "knight";
@@ -30,14 +33,23 @@ public class KnightPiece extends Piece {
 			{-30,5,15,20,20,15,5,-30},
 			{-30,0,10,15,15,10,0,-30}, 
 			{-50,-40,-30,-30,-30,-30,-40,-50}
-			}; 
-
+			};
+	/**
+	 * knight constructor
+	 * @param board where knight should be placed
+	 * @param field where knight should be placed
+	 * @param color of a knight that should be placed
+	 */
 	public KnightPiece(Board board, Field field, boolean color) {
 		super(board, field, color, name, notation, board.getPieceValue().knight(), !color ? KNIGHT_UP : KNIGHT_DOWN, false);
 	}
 		
 	// ---------------------------------- ABSTRACT METHODS ----------------------------------
-	
+
+	/**
+	 * calculate a list of possible moves for a knight
+	 * @return list of possible moves
+	 */
 	@Override
 	public ArrayList<Move> getMoves() {
 		ArrayList<Move> moves = new ArrayList<>();

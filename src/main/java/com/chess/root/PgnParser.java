@@ -17,6 +17,9 @@ import com.chess.root.moves.Move;
 import com.chess.root.moves.PromotionMove;
 import com.chess.root.pieces.PawnPiece;
 
+/**
+ * PGN format handler
+ */
 public class PgnParser {
 
     private static final Logger LOG = Logger.getLogger(String.class.getName());
@@ -26,6 +29,11 @@ public class PgnParser {
 
     // ---------------------------------- IMPORT ----------------------------------
 
+    /**
+     * Extracts event data
+     * @param settings for a game, storing pgn data
+     * @return event data
+     */
     public static String getEvent(Setting settings) {
         String[] meta = settings.getPgnMeta();
         if (meta != null) {
@@ -38,6 +46,11 @@ public class PgnParser {
         return "Casual waste of time";
     }
 
+    /**
+     * Extracts site data
+     * @param settings for a game, storing pgn data
+     * @return site data
+     */
     public static String getSite(Setting settings) {
         String[] meta = settings.getPgnMeta();
         if (meta != null) {
@@ -49,7 +62,11 @@ public class PgnParser {
         }
         return "Your cave, SWITZERLAND";
     }
-
+    /**
+     * Extracts date
+     * @param settings for a game, storing pgn data
+     * @return date data
+     */
     public static String getDate(Setting settings) {
         String[] meta = settings.getPgnMeta();
         if (meta != null) {
@@ -64,6 +81,11 @@ public class PgnParser {
         return dateFormat.format(date);
     }
 
+    /**
+     * Extracts round data
+     * @param settings for a game, storing pgn data
+     * @return round data
+     */
     public static String getRound(Setting settings) {
         String[] meta = settings.getPgnMeta();
         if (meta != null) {
@@ -76,6 +98,11 @@ public class PgnParser {
         return null;
     }
 
+    /**
+     * Extracts white player data
+     * @param settings for a game, storing pgn data
+     * @return white player data
+     */
     public static String getWhite(Setting settings) {
         String[] meta = settings.getPgnMeta();
         if (meta != null) {
@@ -88,6 +115,11 @@ public class PgnParser {
         return null;
     }
 
+    /**
+     * Extracts black player data
+     * @param settings for a game, storing pgn data
+     * @return black player data
+     */
     public static String getBlack(Setting settings) {
         String[] meta = settings.getPgnMeta();
         if (meta != null) {
@@ -100,6 +132,11 @@ public class PgnParser {
         return null;
     }
 
+    /**
+     * Extracts game result from pgn data
+     * @param settings for a game, storing pgn data
+     * @return game result
+     */
     public static String getResult(Setting settings) {
         String[] meta = settings.getPgnMeta();
         if (meta != null) {
@@ -112,6 +149,11 @@ public class PgnParser {
         return "*";
     }
 
+    /**
+     * extracts moves from pgn game string
+     * @param s string with whole pgn game
+     * @return list of moves in pgn notation
+     */
     public static List<String> parseMoves(String s) {
         String alpha = "[A-Za-z]+";
         String[] arr = s.replaceAll("\\{.*?}", "").replaceAll("\\.", "\\. ").replaceAll("\n", "\n ").split(" ");
@@ -124,6 +166,12 @@ public class PgnParser {
         return result;
     }
 
+    /**
+     * Finds move from list of possible moves for current game state which matches PGN notation
+     * @param s move in PGN notation
+     * @param moves all possible game moves  for current game state
+     * @return game move for given pgn move
+     */
     public static Move parseMove(String s, List<Move> moves) {
         s = s.replaceAll("\\+", "").replaceAll("#", "").replaceAll("\n", "").replaceAll(" ", "").trim();
         if (moves != null) {
@@ -186,6 +234,11 @@ public class PgnParser {
         return null;
     }
 
+    /**
+     *
+     * @param file
+     * @return
+     */
     public static String getFileContent(File file) {
         String text = null;
         try (Scanner scanner = new Scanner(file)) {
@@ -198,6 +251,11 @@ public class PgnParser {
 
     // ---------------------------------- EXPORT ----------------------------------
 
+    /**
+     * constructs PGN file text out of a game state
+     * @param game object storing game state
+     * @return PGN file text
+     */
     public static String getFullPgn(Game game) {
         return getMetaData(game) + "\n\n" + getMoves(game);
     }

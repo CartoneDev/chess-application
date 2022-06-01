@@ -1,5 +1,8 @@
 package com.chess.model;
 
+/**
+ * collections of piece values for different difficulties of an AI
+ */
 public enum PieceValues {
 
     RANDOM(200, 200, 200, 200, 200, 200),
@@ -23,7 +26,7 @@ public enum PieceValues {
     }
 
     // ---------------------------------- GENERIC GETTERS ----------------------------------
-
+    // -- gets a particular figure value
     public int king() {
         return king;
     }

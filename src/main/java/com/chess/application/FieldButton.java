@@ -2,15 +2,11 @@ package com.chess.application;
 
 import com.chess.root.Board;
 import com.chess.root.Field;
-import javafx.animation.FadeTransition;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.effect.Lighting;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
-import javafx.util.Duration;
 
 /**
  * Class for the piece field.
@@ -38,18 +34,25 @@ public class FieldButton extends Button {
         addEvents();
     }
 
-
+    /**
+     * getter for a game field associated with a field button
+     * @return
+     */
     public Field getField() {
         return field;
     }
 
+    /**
+     * sets game field associated with qa button
+     * @param field to be associated with a button
+     * */
     public void setField(Field field) {
         this.field = field;
     }
 
     private void addEvents() {
         setOnMouseClicked((MouseEvent event) -> {
-            if (board.isEditable() && event.getButton() == MouseButton.PRIMARY) {
+            if (board.isPlayMode() && event.getButton() == MouseButton.PRIMARY) {
                 board.performManualMove(event);
             }
             event.consume();

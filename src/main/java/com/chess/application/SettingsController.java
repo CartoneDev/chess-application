@@ -29,6 +29,9 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+/**
+ * controller for setting up all out\pre game settings
+ */
 public class SettingsController extends SceneController implements Initializable {
 
 
@@ -75,6 +78,11 @@ public class SettingsController extends SceneController implements Initializable
 
     // ---------------------------------- INITIALIZATION ----------------------------------
 
+    /**
+     * initializes settings resources
+     * @param location where resources located
+     * @param resources set of resources to be processed
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
@@ -131,6 +139,10 @@ public class SettingsController extends SceneController implements Initializable
 
     // ---------------------------------- DIFFICULTY CHOICE HANDLING ----------------------------------
 
+    /**
+     * gets chosen on slider difficulty
+     * @param newValue
+     */
     public void getSliderValue(Number newValue) {
         int value = newValue.intValue();
         PieceValues pieceVal = PieceValues.RANDOM;

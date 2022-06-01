@@ -13,6 +13,13 @@ public class CastlingMove extends Move {
     private final Field rookField;
     private final Field rookStartField;
 
+    /**
+     * castling move constructor
+     * @param king to move
+     * @param rook to be jumped around
+     * @param kingField where king goes
+     * @param rookField where rook goes
+     */
     public CastlingMove(Piece king, Piece rook, Field kingField, Field rookField) {
         super(king, kingField, null);
         this.rook = rook;
@@ -26,6 +33,9 @@ public class CastlingMove extends Move {
         updateRating(king);
     }
 
+    /**
+     * @param board on which move is to be executed
+     */
     @Override
     public void execute(Board board) {
         rook.getField().removePiece(false);
@@ -35,6 +45,10 @@ public class CastlingMove extends Move {
         super.execute(board);
     }
 
+    /**
+     * undoes castling
+     * @param board to be reconfigured as move has been undone
+     */
     @Override
     public void undo(Board board) {
         rookField.removePiece(false);
@@ -44,11 +58,17 @@ public class CastlingMove extends Move {
         super.undo(board);
     }
 
+    /**
+     * @return move in chess notation
+     */
     @Override
     public String getNotation() {
         return notation;
     }
 
+    /**
+     * @return move in pgn notation
+     */
     @Override
     public String getPgnNotation() {
         return notation;

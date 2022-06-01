@@ -9,7 +9,9 @@ import com.chess.root.Board;
 import com.chess.root.Field;
 import com.chess.root.moves.CastlingMove;
 import com.chess.root.moves.Move;
-
+/**
+ * king class
+ */
 public class KingPiece extends Piece {
 
     private static String name = "king";
@@ -25,7 +27,12 @@ public class KingPiece extends Piece {
 
     private static final int[][] KING_UP_END = {{-50, -40, -30, -20, -20, -30, -40, -50}, {-30, -20, -10, 0, 0, -10, -20, -30}, {-30, -10, 20, 30, 30, 20, -10, -30}, {-30, -10, 30, 40, 40, 30, -10, -30}, {-30, -10, 30, 40, 40, 30, -10, -30}, {-30, -10, 20, 30, 30, 20, -10, -30}, {-30, -30, 0, 0, 0, 0, -30, -30}, {-50, -30, -30, -30, -30, -30, -30, -50}};
     private static final int[][] KING_DOWN_END = {{-50, -30, -30, -30, -30, -30, -30, -50}, {-30, -30, 0, 0, 0, 0, -30, -30}, {-30, -10, 20, 30, 30, 20, -10, -30}, {-30, -10, 30, 40, 40, 30, -10, -30}, {-30, -10, 30, 40, 40, 30, -10, -30}, {-30, -10, 20, 30, 30, 20, -10, -30}, {-30, -20, -10, 0, 0, -10, -20, -30}, {-50, -40, -30, -20, -20, -30, -40, -50}};
-
+    /**
+     * king constructor
+     * @param board where king should be placed
+     * @param field where king should be placed
+     * @param color of a king that should be placed
+     */
     public KingPiece(Board board, Field field, boolean color) {
         super(board, field, color, name, notation, board.getPieceValue().king(), !color ? KING_UP : KING_DOWN, false);
         moved = color ? !field.getNotation().contentEquals("e8") : !field.getNotation().contentEquals("e1");
@@ -44,6 +51,10 @@ public class KingPiece extends Piece {
         init = false;
     }
 
+    /**
+     * set figure to game end
+     * @param end is end
+     */
     @Override
     public void setEndTable(boolean end) {
         if (end) {
@@ -53,17 +64,26 @@ public class KingPiece extends Piece {
         }
     }
 
+    /**
+     * checks if king has moved in a game
+     * @return king is moved
+     */
     @Override
     public boolean wasMoved() {
         return moved;
     }
 
+    /**
+     * method to remember that rook moved
+     */
     @Override
     public void moved() {
         movecounter++;
         moved = true;
     }
-
+    /**
+     * method to reckon undo of rook move
+     */
     @Override
     public void unmove() {
         movecounter--;
@@ -73,7 +93,10 @@ public class KingPiece extends Piece {
     }
 
     // ---------------------------------- ABSTRACT METHODS ----------------------------------
-
+    /**
+     * calculate a list of possible moves for a king
+     * @return list of possible moves
+     */
     @Override
     public ArrayList<Move> getMoves() {
 
@@ -102,7 +125,10 @@ public class KingPiece extends Piece {
         return moves;
     }
 
-
+    /**
+     * calculates castling moves for a king
+     * @return castling moves for a king
+     */
     public List<Move> getCastlingMoves() {
         checkInit();
         ArrayList<Move> moves = new ArrayList<>();

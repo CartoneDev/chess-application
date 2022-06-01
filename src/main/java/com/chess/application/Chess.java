@@ -49,11 +49,19 @@ public class Chess extends Application {
         }
     }
 
+    /**
+     * starts an application
+     * @param args application args, unused
+     */
     @Override
     public void start(Stage args) {
         getSettingsScreen(null);
     }
 
+    /**
+     * stops an application
+     * @throws Exception
+     */
     @Override
     public void stop() throws Exception {
         super.stop();

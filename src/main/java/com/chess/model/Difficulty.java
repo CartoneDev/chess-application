@@ -1,5 +1,9 @@
 package com.chess.model;
 
+/**
+ * various AI difficulty settings
+ */
+
 public enum Difficulty {
 
     RANDOM("random", 1, 0, 1, false, true),
@@ -32,18 +36,31 @@ public enum Difficulty {
         return level;
     }
 
+    /**
+     * @return depth of recursive move checks
+     */
     public int tree() {
         return tree;
     }
 
+    /**
+     * @return random factor of a difficulty
+     */
     public int spasm() {
         return spasm;
     }
 
+    /**
+     * gets flag setting for a difficulty representing if depth(of a move search) should be checked recursively in depth
+     * @return
+     */
     public boolean recursion() {
         return recursionDepthChanges;
     }
 
+    /**
+     * @return is draw checkers set for this difficulty
+     */
     public boolean draw() {
         return drawCheck;
     }

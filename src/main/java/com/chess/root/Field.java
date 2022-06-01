@@ -10,6 +10,9 @@ import com.chess.root.pieces.Piece;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
+/**
+ * represents individual field on a chess field
+ */
 public class Field {
     private FieldButton button;
     private final int column;
@@ -19,6 +22,12 @@ public class Field {
     private final String notation;
     private static final Logger LOG = Logger.getLogger(String.class.getName());
 
+    /**
+     * constructs a game field with given coordinates and color
+     * @param column Y coordinate of a field
+     * @param row X coordinate of a field
+     * @param isBlack field color
+     */
     public Field(int column, int row, boolean isBlack) {
         this.column = column;
         this.row = row;
@@ -28,6 +37,10 @@ public class Field {
 
     // ---------------------------------- GAMEPLAY HANDLING ----------------------------------
 
+    /**
+     * set piece on a field
+     * @param piece
+     */
     public void setPiece(Piece piece) {
         if (piece == null) {
             throw new NullPointerException("piece is null" + this);
@@ -35,6 +48,11 @@ public class Field {
         setPiece(piece, false);
     }
 
+    /**
+     * sets piece on the field
+     * @param piece to be placed here
+     * @param init should piece be placed silently(without calling of a GUI  rerender)
+     */
     public void setPiece(Piece piece, boolean init) {
         if (piece == null) {
             throw new NullPointerException("piece is null" + this);
@@ -49,6 +67,10 @@ public class Field {
         }
     }
 
+    /**
+     * sets rook on a filed
+     * @param piece rook to be placed here
+     */
     public void setRookPiece(Piece piece) {
         this.piece = piece;
         if (button != null) {
@@ -76,6 +98,10 @@ public class Field {
         }
     }
 
+    /**
+     * sets opacity of a GUI button representing this field
+     * @param d opacity value
+     */
     public void setOpacity(Double d) {
         button.setOpacity(d);
         Platform.runLater(() -> button.setOpacity(d));
@@ -93,6 +119,10 @@ public class Field {
         }
     }
 
+    /**
+     * restores piece emplacement on a field when undone
+     * @param piece to be placed back
+     */
     public void restorePiece(Piece piece) {
         if (piece == null) {
             throw new NullPointerException("no piece found");
@@ -112,6 +142,9 @@ public class Field {
         this.piece.setFieldSilently(this);
     }
 
+    /**
+     * renders field, which figure or empty
+     */
     public void render() {
         if (piece == null) {
             Platform.runLater(() -> button.setGraphic(null));
@@ -126,6 +159,10 @@ public class Field {
         }
     }
 
+    /**
+     * removes piece from a field
+     * @param isVictim is piece taken by opponent
+     */
     public void removePiece(boolean isVictim) {
         if (this.piece != null) {
             this.piece = null;
@@ -136,6 +173,9 @@ public class Field {
         }
     }
 
+    /**
+     * clears button
+     */
     public void forceRemove() {
         if (button != null) {
             Platform.runLater(this::clearButton);
@@ -148,24 +188,42 @@ public class Field {
         button.setText("");
     }
 
+    /**
+     * places figure silently, without any GUI changes
+     * @param piece to place
+     */
     public void setPieceSilently(Piece piece) {
         this.piece = piece;
     }
-
+    /**
+     * removes figure from the field silently, without any GUI changes
+     */
     public void removePieceSilently() {
         piece = null;
     }
 
     // ---------------------------------- GENERIC SETTERS AND GETTERS ----------------------------------
 
+    /**
+     * gets piece on the field
+     * @return piece on the field
+     */
     public Piece getPiece() {
         return piece;
     }
 
+    /**
+     * gets x coordinate
+     * @return x coordinate
+     */
     public int getColumn() {
         return column;
     }
 
+    /**
+     * converts x coordinate to column literal
+     * @return column literal
+     */
     public String getColNotation() {
         String s = "";
         switch (column) {
@@ -183,6 +241,10 @@ public class Field {
         return s;
     }
 
+    /**
+     * gets row coordinate rulewise
+     * @return row coordinate for board
+     */
     public int getRowNotation() {
         int s = 0;
         switch (row) {
@@ -200,18 +262,34 @@ public class Field {
         return s;
     }
 
+    /**
+     * getter field coordinate in chess notation
+     * @return field coordinate in chess notation
+     */
     public String getNotation() {
         return notation;
     }
 
+    /**
+     * getter y coordinate
+     * @return getter y coordinate
+     */
     public int getRow() {
         return row;
     }
 
+    /**
+     * getter for field gui color
+     * @return is field black
+     */
     public boolean isBlack() {
         return isBlack;
     }
 
+    /**
+     * links gui button to the field
+     * @param button to link
+     */
     public void setButton(FieldButton button) {
         this.button = button;
     }
@@ -229,16 +307,29 @@ public class Field {
         button.getGraphic().setOpacity(1.0);
     }
 
+    /**
+     * represents field as string
+     * @return field as string
+     */
     @Override
     public String toString() {
         return "field " + getColumn() + getRow();
     }
 
+    /**
+     * checks field equality with other field
+     * @param obj to compare
+     * @return if objects are same
+     */
     @Override
     public boolean equals(Object obj) {
         return this == obj;
     }
 
+    /**
+     * hash function for field comparison
+     * @return hash code of a field
+     */
     @Override
     public int hashCode() {
         int hash = this.isBlack() ? 3 : 4;

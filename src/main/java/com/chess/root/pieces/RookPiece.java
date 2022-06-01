@@ -6,6 +6,9 @@ import com.chess.root.Board;
 import com.chess.root.Field;
 import com.chess.root.moves.Move;
 
+/**
+ * Rook class
+ */
 public class RookPiece extends Piece {
 	
 	private static String name = "rook";
@@ -34,23 +37,39 @@ public class RookPiece extends Piece {
 	private boolean moved = false;
 	private int movecounter = 0;
 	private boolean dead = false;
-	
+
+	/**
+	 * rook constructor
+	 * @param board where rook should be placed
+	 * @param field where rook should be placed
+	 * @param color of a rook that should be placed
+	 */
 	public RookPiece(Board board, Field field, boolean color) {
 		super(board, field, color, name, notation, board.getPieceValue().rook(), !color ? ROOK_UP : ROOK_DOWN, false);
 		moved = color ? !(field.getNotation().contentEquals("a8") || field.getNotation().contentEquals("h8")) : !(field.getNotation().contentEquals("a1") || field.getNotation().contentEquals("h1"));
 	}
-	
+
+	/**
+	 * checks if rook has moved in a game
+	 * @return rook is moved
+	 */
 	@Override
 	public boolean wasMoved() {
 		return moved;
 	}
-	
+
+	/**
+	 * method to remember that rook moved
+	 */
 	@Override
 	public void moved() {
 		movecounter++;
 		moved = true;
 	}
-	
+
+	/**
+	 * method to reckon undo of rook move
+	 */
 	@Override
 	public void unmove() {
 		movecounter--;
@@ -58,22 +77,36 @@ public class RookPiece extends Piece {
 			moved = false;
 		}
 	}
-	
+
+	/**
+	 * marks figure as taken
+	 */
 	public void kill() {
 		dead = true;
 	}
-	
+
+	/**
+	 * marks figure as not taken, when undo move
+	 */
 	public void revive() {
 		dead = false;
 	}
-	
+
+	/**
+	 * checks if figure is taken
+	 * @return is figure taken
+	 */
 	@Override
 	public boolean isDead() {
 		return dead;
 	}
 	
 	// ---------------------------------- ABSTRACT METHODS ----------------------------------
-	
+
+	/**
+	 * calculate a list of possible moves for a rook
+	 * @return list of possible moves
+	 */
 	@Override
 	public ArrayList<Move> getMoves() {
 		ArrayList<Move> moves = new ArrayList<>();

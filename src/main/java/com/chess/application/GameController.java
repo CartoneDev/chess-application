@@ -171,6 +171,10 @@ public final class GameController extends SceneController implements Initializab
         super.startNewGame(settingsController, stage, settings);
     }
 
+    /**
+     * exit button
+     * @param event click on button event
+     */
     @FXML
     @Override
     public void handleExit(ActionEvent event) {
@@ -297,6 +301,10 @@ public final class GameController extends SceneController implements Initializab
         stepForwardButton.setVisible(on);
     }
 
+    /**
+     * getter for a difficulty
+     * @param newValue
+     */
     public void getSliderValue(Number newValue) {
         int value = newValue.intValue();
         game.setSpeed(300 - value);
@@ -357,50 +365,91 @@ public final class GameController extends SceneController implements Initializab
 
     // ---------------------------------- EDIT PUBLIC CONTROLS ----------------------------------
 
+    /**
+     * sets start game button active
+     * @param activate game button?
+     */
     public void setGoBut(boolean activate) {
         goButton.setDisable(!activate);
     }
 
+    /**
+     * sets stop game button active
+     * @param activate stop button?
+     */
     public void setStopBut(boolean activate) {
         stopButton.setDisable(!activate);
     }
 
+    /**
+     * sets back button active
+     * @param activate back button?
+     */
     public void setBackBut(boolean activate) {
         stepBackButton.setDisable(!activate);
     }
 
+
+    /**
+     * sets forward button active
+     * @param activate forward button?
+     */
     public void setForwardBut(boolean activate) {
         stepForwardButton.setDisable(!activate);
     }
 
+    /**
+     * sets focus on start button
+     */
     public void requestFocusGo() {
         goButton.requestFocus();
     }
 
+    /**
+     * sets focus on a stop button
+     */
     public void requestFocusStop() {
         stopButton.requestFocus();
     }
 
+    /**
+     * sets focus on a back button
+     */
     public void requestFocusBack() {
         stepBackButton.requestFocus();
     }
 
+    /**
+     * sets focus on a forward button
+     */
     public void requestFocusForward() {
         stepForwardButton.requestFocus();
     }
 
     // ---------------------------------- STATUS BAR HANDLING ----------------------------------
+
+    /**
+     * displays which player turn
+     * @param game
+     */
     public void displayPlayer(Game game) {
         if (game != null && game.getPlayer() != null) {
             setDisplay(game.getPlayer().toString() + "'s turn");
         }
     }
 
+    /**
+     * sets game status
+     * @param display text to be displayed
+     */
     public void setDisplay(String display) {
         gameStatusText = display;
         renderDisplay();
     }
 
+    /**
+     * redraws display
+     */
     public void renderDisplay() {
         if (Platform.isFxApplicationThread()) {
             statusTextLabel.setText(gameStatusText);
@@ -409,6 +458,10 @@ public final class GameController extends SceneController implements Initializab
         }
     }
 
+    /**
+     * updates move counter display
+     * @param counter moves count as a string
+     */
     public void updateMoveCounter(String counter) {
         Platform.runLater(() -> moveCounter.setText(counter));
     }

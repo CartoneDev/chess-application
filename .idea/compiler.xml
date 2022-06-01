@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Chekomato" />
+        <module name="lezhnevg-master" />
       </profile>
     </annotationProcessing>
   </component>

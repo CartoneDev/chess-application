@@ -47,6 +47,11 @@ public class Board {
     private static final Random random = new Random();
     private boolean dummyMode;
 
+    /**
+     * construcotor for game Board
+     * @param game currently being played
+     * @param settings game settings
+     */
     public Board(Game game, Setting settings) {
         this.game = game;
         this.difficulty = settings.getDifficulty();
@@ -66,6 +71,10 @@ public class Board {
 
     // ---------------------------------- MANUAL GAMEPLAY ----------------------------------
 
+    /**
+     * executes game move of a player
+     * @param event
+     */
     public void performManualMove(MouseEvent event) {
         if (!getPlayer().isAI()) {
             FieldButton button = (FieldButton) event.getSource();
@@ -141,6 +150,9 @@ public class Board {
 
     // ---------------------------------- AI GAMEPLAY ----------------------------------
 
+    /**
+     * executes game move of an AI player
+     */
     public void performAIMove() {
         if (getPlayer() != null) {
             Move bestMove = getBestMove();
@@ -322,6 +334,10 @@ public class Board {
         isNextMoveUnlocked = true;
     }
 
+    /**
+     * redoes a move
+     * @param move to redone
+     */
     public void redoMove(Move move) {
         if (move == null && !moveFuture.isEmpty()) {
             move = moveFuture.get(moveFuture.size() - 1);
@@ -334,6 +350,10 @@ public class Board {
         }
     }
 
+    /**
+     * undoes a move
+     * @param move to undone
+     */
     public void undoMove(Move move) {
         if (move == null && !moveHistory.isEmpty()) {
             move = moveHistory.get(moveHistory.size() - 1);
@@ -347,6 +367,9 @@ public class Board {
         }
     }
 
+    /**
+     * finishes move switches player
+     */
     public void endMove() {
         game.updateMoveCounter();
         game.switchPlayer();
@@ -421,6 +444,11 @@ public class Board {
         }
     }
 
+    /**
+     * getter for a king
+     * @param blackPlayer is a black player
+     * @return a king
+     */
     public Piece getKing(boolean blackPlayer) {
         List<Piece> pieces = getPieces(blackPlayer);
         Piece king = null;
@@ -432,6 +460,12 @@ public class Board {
         return king;
     }
 
+    /**
+     * checks if piece is under attack
+     * @param piece to be checked
+     * @param otherPieces in game
+     * @return is piece under attack
+     */
     public boolean isPieceEndangered(Piece piece, List<Piece> otherPieces) {
         List<Move> otherMoves = getMoves(otherPieces, getOtherPlayer().isBlack());
         if (!otherMoves.isEmpty()) {
@@ -459,6 +493,9 @@ public class Board {
 
     // ---------------------------------- BOARD STATE HANDLING ----------------------------------
 
+    /**
+     * Checks if board is still playble, no stalemate or checks after move, finishes game if so
+     */
     public void validateBoard() {
         if (getPlayer() == null) {
             return;
@@ -562,14 +599,25 @@ public class Board {
 
     // ---------------------------------- EDIT MODE HANDLING ----------------------------------
 
+    /**
+     * sets control delay so graphics not that intensly updated, better for a player eye perception
+     * @param delay
+     */
     public void setDelay(int delay) {
         delayControl = delay;
     }
 
-    public boolean isEditable() {
+    /**
+     * Check if board is in edit mode
+     * @return board is in play mode
+     */
+    public boolean isPlayMode() {
         return !editMode;
     }
 
+    /**
+     * Clean up and validate board on edit mode exit
+     */
     public void cleanUpEdit() {
         validateBoard();
         if (hasFutureMoves()) {
@@ -577,16 +625,28 @@ public class Board {
         }
     }
 
+    /**
+     * self documentary
+     */
     public boolean hasFutureMoves() {
         return !moveFuture.isEmpty();
     }
 
     // ---------------------------------- PIECE AND FIELD HANDLING ----------------------------------
 
+    /**
+     * getter for figures
+     * @param isBlack
+     * @return figures
+     */
     public List<Piece> getPieces(boolean isBlack) {
         return isBlack ? blackPieces : whitePieces;
     }
 
+    /**
+     * Adds piece to a player
+     * @param piece to add in game
+     */
     public void addPiece(Piece piece) {
         if (piece.isBlack()) {
             blackPieces.add(piece);
@@ -595,6 +655,10 @@ public class Board {
         }
     }
 
+    /**
+     * removes piece from a board
+     * @param piece to remove
+     */
     public void removePiece(Piece piece) {
         if (piece.isBlack()) {
             blackPieces.remove(piece);
@@ -603,6 +667,11 @@ public class Board {
         }
     }
 
+    /**
+     * @param column
+     * @param row
+     * @return field on col and row
+     */
     public Field getField(int column, int row) {
         return fields[row][column];
     }
@@ -611,15 +680,27 @@ public class Board {
 
 
     // difficulty
+
+    /**
+     * @return piece value
+     */
     public PieceValues getPieceValue() {
         return pieceValues;
     }
 
     // rules
+
+    /**
+     * @return piece that've done passant
+     */
     public Piece getEnPassantPiece() {
         return enPassantPiece;
     }
 
+    /**
+     * sets piece to passant
+     * @param piece pawn to set as one that 've done passant
+     */
     public void setEnPassantPiece(Piece piece) {
         enPassantPiece = piece;
     }
@@ -672,6 +753,11 @@ public class Board {
         }
     }
 
+    /**
+     * displays hint of possible move for field on which figure standing and where figure can go
+     * @param piece that is activated to take turn
+     * @param on is hint to be shown of disabled after being shown
+     */
     public void showHintsForDummies(Piece piece, boolean on) {
         if (dummyMode) {
             Double op = on ? 0.7 : 1.0;
@@ -685,10 +771,17 @@ public class Board {
         }
     }
 
+    /**
+     * sets figure hint mode on / off
+     * @param on / off figure hint mode
+     */
     public void setDummyMode(boolean on) {
         dummyMode = on;
     }
 
+    /**
+     * triggers render for each field on a board
+     */
     public void render() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -729,6 +822,10 @@ public class Board {
     }
 
 
+    /**
+     * simulates game by PGN save file
+     * @param settings pgn data
+     */
     public void executePgn(Setting settings) {
         if (settings.hasPgn()) {
             initializing = true;

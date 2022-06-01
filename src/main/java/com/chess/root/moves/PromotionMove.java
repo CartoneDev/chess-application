@@ -8,17 +8,31 @@ import com.chess.root.pieces.Piece;
 import com.chess.root.pieces.QueenPiece;
 import com.chess.root.pieces.RookPiece;
 
+/**
+ * a move with a pawn promotion
+ */
 public class PromotionMove extends Move {
 
     private final Piece pawn;
     private Piece queen;
 
+    /**
+     * Constructor for a promotional move
+     * @param piece pawn that moved
+     * @param queen figure to promote a pawn, queen in our implementation
+     * @param field where figure is moved
+     * @param victim taken figure by move
+     */
     public PromotionMove(Piece piece, Piece queen, Field field, Piece victim) {
         super(queen, field, victim);
         this.pawn = piece;
         rating = queen.getRating() * 2;
     }
 
+    /**
+     * get a promoted pawn
+     * @return a promoted pawn
+     */
     @Override
     public Piece getPawn() {
         return pawn;
@@ -30,6 +44,9 @@ public class PromotionMove extends Move {
         q.getField().setPiece(q);
     }
 
+    /**
+     * @param board on which move is to be executed
+     */
     @Override
     public void execute(Board board) {
         boolean countdownReset = false;
@@ -58,6 +75,10 @@ public class PromotionMove extends Move {
         }
     }
 
+    /**
+     * undoes promotional move
+     * @param board to be reconfigured as promotional move has been undone
+     */
     @Override
     public void undo(Board board) {
         startField.restorePiece(pawn);
@@ -79,7 +100,13 @@ public class PromotionMove extends Move {
         resetBoard(board);
     }
 
-
+    /**
+     * processes a move as with no graphical update happen
+     * @param board to be processed
+     * @param otherPieces list of pieces on board
+     * @param myPieces pieces of a player
+     * @param thisMove promotional move that to be silently happen
+     */
     @Override
     public void executeSimulation(Board board, List<Piece> otherPieces, List<Piece> myPieces, Move thisMove) {
         super.executeSimulation(board, otherPieces);
@@ -90,6 +117,13 @@ public class PromotionMove extends Move {
         myPieces.add(piece);
     }
 
+    /**
+     * undo a move as with no graphical update happen
+     * @param board to be processed
+     * @param otherPieces list of pieces on board
+     * @param myPieces pieces of a player
+     * @param thisMove promotional move that to be silently happen
+     */
     @Override
     public void undoSimulation(Board board, List<Piece> otherPieces, List<Piece> myPieces, Move thisMove) {
         super.undoSimulation(board, otherPieces);

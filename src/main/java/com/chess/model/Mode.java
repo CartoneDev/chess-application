@@ -1,5 +1,8 @@
 package com.chess.model;
 
+/**
+ * collections of possible game mods
+ */
 public enum Mode {
 	
 	MANUAL_VS_AI("You vs AI"), 

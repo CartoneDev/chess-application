@@ -7,11 +7,18 @@ import com.chess.root.pieces.PawnPiece;
 import com.chess.root.pieces.QueenPiece;
 import com.chess.root.pieces.RookPiece;
 
+/**
+ * class for initializing a board with pieces
+ */
 public class PieceInitializer {
 
     private PieceInitializer() {
     }
 
+    /**
+     * Fills board with figures
+     * @param board to be filled
+     */
     public static void initialize(Board board) {
         new PawnPiece(board, board.getField(0, 1), true);
         new PawnPiece(board, board.getField(1, 1), true);

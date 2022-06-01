@@ -10,6 +10,9 @@ import com.chess.root.moves.Move;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * abstract class for a figure
+ */
 public abstract class Piece {
     protected Board board;
     protected Field field;
@@ -23,7 +26,12 @@ public abstract class Piece {
 
     private static final int IMGSIZE = 60;
     protected int[][] table;
-
+    /**
+     * abstract figure constructor
+     * @param board where figure should be placed
+     * @param field where figure should be placed
+     * @param color of a figure that should be placed
+     */
     public Piece(Board board, Field field, boolean color, String name, String notation, int rating, int[][] table, boolean simulation) {
         this.board = board;
         if (field == null) {
@@ -42,6 +50,9 @@ public abstract class Piece {
         }
     }
 
+    /**
+     * adds reference to a piece to a board and board field
+     */
     public void init() {
         field.setPiece(this, true);
         board.addPiece(this);
@@ -49,6 +60,10 @@ public abstract class Piece {
 
     // ---------------------------------- GAMEPLAY HANDLING ----------------------------------
 
+    /**
+     * sets figure field
+     * @param field where figure is placed
+     */
     public void setField(Field field) {
         if (field == null) {
             throw new NullPointerException("null value was set" + this);
@@ -58,6 +73,10 @@ public abstract class Piece {
         board.endMove();
     }
 
+    /**
+     * sets figure field without any graphical updates
+     * @param field where figure is placed
+     */
     public void setFieldSilently(Field field) {
         this.field = field;
         updatePos();
@@ -69,20 +88,30 @@ public abstract class Piece {
 
     // ---------------------------------- GENERIC GETTERS AND SETTERS ----------------------------------
 
+    /**
+     * retrives figure field
+     * @return figure field
+     */
     public Field getField() {
         if (field == null) {
             throw new NullPointerException("Field not found! " + this);
         }
         return field;
     }
-
+    /**
+     * retrives figure column
+     * @return figure column
+     */
     public int getColumn() {
         if (field == null) {
             throw new NullPointerException("Field column not found - out of range!" + this);
         }
         return field.getColumn();
     }
-
+    /**
+     * retrives figure row
+     * @return figure row
+     */
     public int getRow() {
         if (field == null) {
             throw new NullPointerException("Field row not found - out of range!");
@@ -98,48 +127,79 @@ public abstract class Piece {
         return color;
     }
 
+    /**
+     * getter for a visual representation of a figure
+     * @return visual representation of a figure
+     */
     public ImageView getSymbol() {
         return symbol;
     }
 
+    /**
+     * @return figure in text chess notation
+     */
     public String getNotation() {
         return notation;
     }
-
+    /**
+     * @return figure in pgn notation
+     */
     public String getPgnNotation() {
         return getNotation();
     }
 
+    /**
+     * @return figure rating
+     */
     public int getRating() {
         return rating;
     }
 
+    /**
+     * @return figure value
+     */
     public int getValue() {
         return rating + posValue;
     }
 
+    /**
+     * @return if figure have moved
+     */
     public boolean wasMoved() {
         return true;
     }
 
-    public void moved() {
+    /**
+     * marks figure when moved
+     */
+    public void moved(){}
 
-    }
-
+    /**
+     * unmarks figure when undo moved
+     */
     public void unmove() {
 
     }
 
+    /**
+     * @return is figure taken
+     */
     public boolean isDead() {
         return false;
     }
 
+    /** tells figure that game have stopped
+     * @param end
+     */
     public void setEndTable(boolean end) {
 
     }
 
     // ---------------------------------- HELPER METHODS ----------------------------------
 
+    /**
+     * initilises visual representation
+     */
     public void createSymbol() {
         if (image == null || symbol == null) {
             String path = "com/chess/resources/img/";
@@ -156,11 +216,19 @@ public abstract class Piece {
         }
     }
 
+    /**
+     * @return figure as text
+     */
     @Override
     public String toString() {
         return descriptiveName + "" + field.getNotation();
     }
 
+    /**
+     * equality check
+     * @param obj to compare with this
+     * @return obj == this
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -172,6 +240,10 @@ public abstract class Piece {
         return false;
     }
 
+    /**
+     * hash calculation for comparison
+     * @return hash of a figure
+     */
     @Override
     public int hashCode() {
         int hash = this.isBlack() ? 2 : 0;
@@ -184,6 +256,10 @@ public abstract class Piece {
 
     // ---------------------------------- ABSTRACT METHODS ----------------------------------
 
+    /**
+     * calculate possible moves for a figure
+     * @return possible moves for a figure
+     */
     public abstract List<Move> getMoves();
 
 }

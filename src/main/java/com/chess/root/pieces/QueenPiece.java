@@ -6,6 +6,9 @@ import com.chess.root.Board;
 import com.chess.root.Field;
 import com.chess.root.moves.Move;
 
+/**
+ * Queen class
+ */
 public class QueenPiece extends Piece {
 	
 	private static String name = "queen";
@@ -31,13 +34,21 @@ public class QueenPiece extends Piece {
 			{-10,0,5,0,0,0,0,-10},
 			{-20,-10,-10,-5,-5,-10,-10,-20}
 			};
-
+	/**
+	 * queen constructor
+	 * @param board where queen should be placed
+	 * @param field where queen should be placed
+	 * @param color of a queen that should be placed
+	 */
 	public QueenPiece(Board board, Field field, boolean color, boolean simulation) {
 		super(board, field, color, name, notation, board.getPieceValue().queen(), !color ? QUEEN_UP : QUEEN_DOWN, simulation);	
 	}
 	
 	// ---------------------------------- ABSTRACT METHODS ----------------------------------
-	
+	/**
+	 * calculate a list of possible moves for a queen
+	 * @return list of possible moves
+	 */
 	@Override
 	public ArrayList<Move> getMoves() {
 		ArrayList<Move> moves = new ArrayList<>();

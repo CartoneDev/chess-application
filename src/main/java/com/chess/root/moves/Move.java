@@ -40,6 +40,12 @@ public class Move {
     private boolean ambigCol = false;
     private boolean ambigRow = false;
 
+    /**
+     * Constructor for a move
+     * @param piece that moved
+     * @param field where figure is moved
+     * @param victim taken figure by move
+     */
     public Move(Piece piece, Field field, Piece victim) {
         this.piece = piece;
         this.startField = piece.getField();
@@ -53,23 +59,40 @@ public class Move {
 
     // ---------------------------------- PRE-CALCULATE BASE RATING ----------------------------------
 
+    /**
+     * @return game result state after move in pgn notation
+     */
     public String getResult() {
         return result;
     }
 
+    /**
+     * marks col as ambiguous
+     */
     public void ambiguousCol() {
         ambigCol = true;
     }
 
+    /**
+     * marks row as ambiguous
+     */
     public void ambiguousRow() {
         ambigRow = true;
     }
 
 
+    /**
+     * sets move game result state in pgn
+     * @param s game state in pgn
+     */
     public void setResult(String s) {
         result = s;
     }
 
+    /**
+     * sets check/mate suffix for pgn notation
+     * @param s
+     */
     public void setCheckSuffix(String s) {
         checkSuffix = s;
     }
@@ -77,7 +100,7 @@ public class Move {
 
     /**
      * Function executing the move.
-     * @param board
+     * @param board on which move is to be executed
      */
     public void execute(Board board) {
         boolean countdownReset = false;
@@ -128,11 +151,22 @@ public class Move {
         piece.setFieldSilently(field);
         field.setPieceSilently(piece);
     }
-
+    /**
+     * undo a move as with no graphical update happen
+     * @param board to be processed
+     * @param otherPieces list of pieces on board
+     * @param myPieces pieces of a player
+     * @param thisMove promotional move that to be silently happen
+     */
     public void undoSimulation(Board board, List<Piece> otherPieces, List<Piece> myPieces, Move thisMove) {
         undoSimulation(board, otherPieces);
     }
 
+    /**
+     * undo shotrified
+     * @param board
+     * @param otherPieces
+     */
     public void undoSimulation(Board board, List<Piece> otherPieces) {
         startField.setPieceSilently(piece);
         piece.setFieldSilently(startField);
@@ -145,7 +179,10 @@ public class Move {
             field.removePieceSilently();
         }
     }
-
+    /**
+     * undoes promotional move
+     * @param board to be reconfigured as promotional move has been undone
+     */
     public void undo(Board board) {
         startField.restorePiece(piece);
 
@@ -215,6 +252,9 @@ public class Move {
     }
 
 
+    /**
+     * @return move in chess notation
+     */
     public String getNotation() {
         if (notation == null) {
             notation = piece.getNotation() + startField.getNotation() + hitOrMove + field.getNotation() + notationSuffix;
@@ -222,6 +262,9 @@ public class Move {
         return notation + checkSuffix;
     }
 
+    /**
+     * @return pgn notation of a move
+     */
     public String getPgnNotation() {
         String pgnNotation;
         String separator = "";

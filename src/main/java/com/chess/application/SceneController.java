@@ -21,6 +21,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
+/**
+ * generalized Controller
+ */
 public abstract class SceneController implements Initializable {
 
     protected Chess chess;
@@ -40,6 +43,11 @@ public abstract class SceneController implements Initializable {
     @FXML
     protected MenuItem exitItem;
 
+    /**
+     * controller initialisation
+     * @param location to a resources
+     * @param resources set of a used resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
@@ -48,9 +56,9 @@ public abstract class SceneController implements Initializable {
 
     /**
      * Function to load new game controller
-     * @param init
-     * @param stage
-     * @param settings
+     * @param init settings controller passed
+     * @param stage screen where scene is to be displayed
+     * @param settings settings passed
      */
     protected void startNewGame(SettingsController init, Stage stage, Setting settings) {
         try {
@@ -92,13 +100,25 @@ public abstract class SceneController implements Initializable {
         return chess;
     }
 
+    /**
+     * gets screen where scene displayed
+     * @return screen where scene displayed
+     */
     public Stage getStage() {
         return stage;
     }
 
+    /**
+     * gets window where scene displayed
+     * @return scene where scene display
+     */
     public Scene getScene() {
         return stage.getScene();
     }
 
+    /**
+     * getter for a slider value
+     * @param newValue slider value
+     */
     public abstract void getSliderValue(Number newValue);
 }

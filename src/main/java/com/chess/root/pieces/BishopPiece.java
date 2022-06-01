@@ -6,7 +6,9 @@ import com.chess.model.Direction;
 import com.chess.root.Board;
 import com.chess.root.Field;
 import com.chess.root.moves.Move;
-
+/**
+ * bishop class
+ */
 public class BishopPiece extends Piece {
 
     private static final String name = "bishop";
@@ -32,7 +34,12 @@ public class BishopPiece extends Piece {
             {-10, 0, 0, 0, 0, 0, 0, -10},
             {-20, -10, -10, -10, -10, -10, -10, -20}
     };
-
+    /**
+     * bishop constructor
+     * @param board where bishop should be placed
+     * @param field where bishop should be placed
+     * @param color of a bishop that should be placed
+     */
     public BishopPiece(Board board, Field field, boolean color) {
         super(board, field, color, name, notation, board.getPieceValue().bishop(), !color ? BISHOP_UP : BISHOP_DOWN, false);
     }
@@ -40,7 +47,10 @@ public class BishopPiece extends Piece {
 
     // ---------------------------------- ABSTRACT METHODS ----------------------------------
 
-
+    /**
+     * calculate a list of possible moves for a bishop
+     * @return list of possible moves
+     */
     @Override
     public ArrayList<Move> getMoves() {
         ArrayList<Move> moves = new ArrayList<>();

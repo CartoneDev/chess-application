@@ -10,6 +10,9 @@ import com.chess.root.moves.PassingMove;
 import com.chess.root.moves.PawnRunMove;
 import com.chess.root.moves.PromotionMove;
 
+/**
+ * class for a pawn
+ */
 public class PawnPiece extends Piece {
 
     private static String name = "pawn";
@@ -20,12 +23,20 @@ public class PawnPiece extends Piece {
     private static Direction[] dirsEnpassant = {Direction.LEFT, Direction.RIGHT};
     private static final int[][] PAWN_UP = {{200, 200, 200, 200, 200, 200, 200, 200}, {150, 150, 150, 150, 150, 150, 150, 150}, {10, 10, 20, 30, 30, 20, 10, 10}, {5, 5, 10, 25, 25, 10, 5, 5}, {0, 0, 0, 20, 20, 0, 0, 0}, {5, -5, -10, 0, 0, -10, -5, 5}, {5, 10, 10, -20, -20, 10, 10, 5}, {0, 0, 0, 0, 0, 0, 0, 0}};
     private static final int[][] PAWN_DOWN = {{0, 0, 0, 0, 0, 0, 0, 0}, {5, 10, 10, -20, -20, 10, 10, 5}, {5, -5, -10, 0, 0, -10, -5, 5}, {0, 0, 0, 20, 20, 0, 0, 0}, {5, 5, 10, 25, 25, 10, 5, 5}, {10, 10, 20, 30, 30, 20, 10, 10}, {150, 150, 150, 150, 150, 150, 150, 150}, {200, 200, 200, 200, 200, 200, 200, 200}};
-
+    /**
+     * pawn constructor
+     * @param board where pawn should be placed
+     * @param field where pawn should be placed
+     * @param color of a pawn that should be placed
+     */
     public PawnPiece(Board board, Field field, boolean color) {
         super(board, field, color, name, notation, board.getPieceValue().pawn(), !color ? PAWN_UP : PAWN_DOWN, false);
         queenRating = board.getPieceValue().queen();
     }
 
+    /**
+     * @return is pawn moving up
+     */
     public boolean movesUp() {
         return !color;
     }
@@ -35,7 +46,10 @@ public class PawnPiece extends Piece {
     }
 
     // ---------------------------------- ABSTRACT METHODS ----------------------------------
-
+    /**
+     * calculate a list of possible moves for a pawn
+     * @return list of possible moves
+     */
     @Override
     public ArrayList<Move> getMoves() {
         ArrayList<Move> moves = new ArrayList<>();
@@ -114,6 +128,9 @@ public class PawnPiece extends Piece {
         return moves;
     }
 
+    /**
+     * @return figure position in pgn notation
+     */
     @Override
     public String getPgnNotation() {
         return field.getColNotation();
